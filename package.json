@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "shadcn": "bunx --bun shadcn@latest",
-    "drizzle": "bunx --bun drizzle-kit"
+    "drizzle": "bunx --bun drizzle-kit",
+    "postinstall": "bun run drizzle generate && bun run drizzle migrate"
   },
   "dependencies": {
     "@auth/drizzle-adapter": "^1.10.0",
