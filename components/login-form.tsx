@@ -5,8 +5,11 @@ import { LoginButton, LoginButtonProps } from "./login-button";
 
 export function LoginForm({
   className,
+  redirectTo,
   ...props
-}: React.ComponentProps<"div">) {
+}: React.ComponentProps<"div"> & {
+  redirectTo?: string;
+}) {
   const methods: LoginButtonProps[] = [
     {
       icon: "FaGoogle",
@@ -44,7 +47,11 @@ export function LoginForm({
 
           <div className="flex flex-col gap-4 items-center justify-center">
             {methods.map((method) => (
-              <LoginButton key={method.provider} {...method} />
+              <LoginButton
+                key={method.provider}
+                redirectTo={redirectTo}
+                {...method}
+              />
             ))}
           </div>
         </div>

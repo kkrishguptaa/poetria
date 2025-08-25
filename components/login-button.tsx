@@ -9,8 +9,16 @@ export interface LoginButtonProps {
   name: string;
 }
 
-export function LoginButton({ icon, provider, name }: LoginButtonProps) {
+export function LoginButton({
+  redirectTo,
+  icon,
+  provider,
+  name,
+}: LoginButtonProps & {
+  redirectTo?: string;
+}) {
   const Icon = Icons[icon];
+
   return (
     <Button
       variant="outline"
@@ -19,7 +27,9 @@ export function LoginButton({ icon, provider, name }: LoginButtonProps) {
       formAction={async () => {
         "use server";
 
-        await signIn(provider, {});
+        await signIn(provider, {
+          redirectTo,
+        });
       }}
     >
       <Icon />

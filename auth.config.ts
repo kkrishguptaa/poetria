@@ -7,5 +7,6 @@ export default {
   providers: [Google, GitHub, Discord],
   pages: {
     signIn: "/login",
+    signOut: "/logout",
   },
 } satisfies NextAuthConfig;

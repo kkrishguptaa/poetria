@@ -9,8 +9,9 @@ import {
 import type { AdapterAccountType } from "@auth/core/adapters";
 
 import { drizzle } from "drizzle-orm/node-postgres";
+import { env } from "./env";
 
-export const db = drizzle(process.env.DATABASE_URL!);
+export const db = drizzle(env.DATABASE_URL);
 
 export const users = pgTable("user", {
   id: text("id")
@@ -20,6 +21,13 @@ export const users = pgTable("user", {
   email: text("email").unique(),
   emailVerified: timestamp("emailVerified", { mode: "date" }),
   image: text("image"),
+
+  username: text("username")
+    .unique()
+    .$defaultFn(() => {
+      const randomStr = Math.random().toString(36).substring(2, 9);
+      return `user_${randomStr}`;
+    }),
 });
 
 export const accounts = pgTable(

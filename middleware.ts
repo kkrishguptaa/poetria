@@ -10,12 +10,19 @@ export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const session = await auth();
 
-  if (pathname === "/login" && session) {
-    return NextResponse.redirect(new URL("/", request.url));
-  }
-
-  if (pathname === "/" && !session) {
-    return NextResponse.rewrite(new URL("/home", request.url));
+  if (session) {
+    if (pathname === "/login") {
+      return NextResponse.redirect(new URL("/", request.url));
+    }
+  } else {
+    switch (pathname) {
+      case "/":
+        return NextResponse.rewrite(new URL("/home", request.url));
+      case "/logout":
+        return NextResponse.redirect(new URL("/", request.url));
+      default:
+        break;
+    }
   }
 
   return NextResponse.next();
