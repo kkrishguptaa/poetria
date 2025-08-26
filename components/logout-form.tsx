@@ -30,7 +30,3 @@ export function LogoutForm({
     </div>
   );
 }
-
-/**
- * TODO: Privacy Policy and Terms of Service pages
- */
