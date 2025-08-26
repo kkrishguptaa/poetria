@@ -1,4 +1,4 @@
-import { AppShell } from "@/components/app-shell";
+import { AppShell, AppShellProps } from "@/components/app-shell";
 import { auth } from "@/lib/auth";
 import { Session } from "next-auth";
 import { db } from "@/lib/db";
@@ -16,5 +16,9 @@ export default async function AppLayout({
     where: eq(users.email, session.user!.email!),
   });
 
-  return <AppShell session={{ user }}>{children}</AppShell>;
+  return (
+    <AppShell session={{ user } as AppShellProps["session"]}>
+      {children}
+    </AppShell>
+  );
 }
