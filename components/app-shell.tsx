@@ -13,51 +13,59 @@ import {
   SidebarProvider,
 } from "./ui/sidebar";
 import { Bell, Home, Search, Settings } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { db } from "@/lib/db";
 import React, {
   ReactElement,
   isValidElement,
   cloneElement,
   ReactNode,
 } from "react";
-
-const sidebarMenuItems = [
-  {
-    title: "Home",
-    href: "/",
-    icon: Home,
-  },
-  {
-    title: "Search",
-    href: "/search",
-    icon: Search,
-  },
-  {
-    title: "Notifications",
-    href: "/notifications",
-    icon: Bell,
-  },
-];
+import { User } from "@/lib/utils";
+import { UserAvatar } from "./user-avatar";
+import { AppHeader } from "./app-header";
+import { AppNavigation } from "./app-navigation";
 
 export interface AppPageProps {
   session: {
-    user: NonNullable<Awaited<ReturnType<typeof db.query.users.findFirst>>>;
+    user: User;
   };
 }
 
 export interface AppShellProps {
   children?: ReactNode;
   session: {
-    user: NonNullable<Awaited<ReturnType<typeof db.query.users.findFirst>>>;
+    user: User;
   };
+}
+
+export interface NavigationItem {
+  title: string;
+  href: string;
+  icon: typeof Home;
 }
 
 export function AppShell(props: AppShellProps) {
   const user = props.session.user!;
 
+  const items = [
+    {
+      title: "Home",
+      href: "/",
+      icon: Home,
+    },
+    {
+      title: "Search",
+      href: "/search",
+      icon: Search,
+    },
+    {
+      title: "Notifications",
+      href: "/notifications",
+      icon: Bell,
+    },
+  ] as NavigationItem[];
+
   return (
-    <SidebarProvider open={false}>
+    <SidebarProvider defaultOpen={false}>
       <aside>
         <Sidebar collapsible="icon">
           <SidebarHeader>
@@ -75,7 +83,7 @@ export function AppShell(props: AppShellProps) {
           <SidebarContent>
             <SidebarGroup>
               <SidebarMenu>
-                {sidebarMenuItems.map((item) => (
+                {items.map((item) => (
                   <Link
                     key={encodeURIComponent(item.title.toLowerCase())}
                     href={item.href}
@@ -89,19 +97,11 @@ export function AppShell(props: AppShellProps) {
                     </SidebarMenuItem>
                   </Link>
                 ))}
-                <Link href="/settings" className="w-full md:hidden">
-                  <SidebarMenuItem title="Settings">
-                    <SidebarMenuButton>
-                      <Settings />
-                      <span>Settings</span>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                </Link>
               </SidebarMenu>
             </SidebarGroup>
           </SidebarContent>
           <SidebarFooter>
-            <SidebarMenu className="hidden md:block">
+            <SidebarMenu>
               <Link href="/settings" className="w-full">
                 <SidebarMenuItem title="Settings">
                   <SidebarMenuButton>
@@ -113,23 +113,7 @@ export function AppShell(props: AppShellProps) {
               <Link href={`/@${user.username!}`} className="w-full">
                 <SidebarMenuItem title={user.name!}>
                   <SidebarMenuButton>
-                    <Avatar className="size-4">
-                      <AvatarImage
-                        src={
-                          user.image ??
-                          `https://api.dicebear.com/9.x/glass/svg?seed=${encodeURIComponent(
-                            user.name!
-                          )!}`
-                        }
-                        className="size-4"
-                      />
-                      <AvatarFallback className="text-xs">
-                        {user
-                          .name!.split(" ")
-                          .map((n) => n.slice(0, 1))
-                          .join("")}
-                      </AvatarFallback>
-                    </Avatar>
+                    <UserAvatar user={user} />
                     <span>{user.name!}</span>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -139,14 +123,18 @@ export function AppShell(props: AppShellProps) {
         </Sidebar>
       </aside>
       <SidebarInset>
-        {isValidElement(props.children)
-          ? cloneElement(
-              props.children as ReactElement<{
-                session: AppShellProps["session"];
-              }>,
-              { session: props.session }
-            )
-          : props.children}
+        <AppHeader user={user} />
+        <main>
+          {isValidElement(props.children)
+            ? cloneElement(
+                props.children as ReactElement<{
+                  session: AppShellProps["session"];
+                }>,
+                { session: props.session }
+              )
+            : props.children}
+        </main>
+        <AppNavigation user={user} items={items} />
       </SidebarInset>
     </SidebarProvider>
   );
