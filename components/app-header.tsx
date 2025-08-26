@@ -19,7 +19,7 @@ export function AppHeader({ user }: { user: User }) {
           href="/"
           className="flex items-center space-x-2 absolute left-1/2 top-1/2 -translate-1/2"
         >
-          <div className="flex size-4 items-center justify-center rounded-md">
+          <div className="size-4 m-0">
             <PoetriaLogo />
           </div>
           <span className="sr-only">Poetria.</span>
