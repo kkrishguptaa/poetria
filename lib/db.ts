@@ -6,3 +6,7 @@ export const db = drizzle({
   schema,
   connection: env.DATABASE_URL,
 });
+
+export type User = NonNullable<
+  Awaited<ReturnType<typeof db.query.users.findFirst>>
+>;

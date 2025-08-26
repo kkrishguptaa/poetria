@@ -37,8 +37,8 @@ export function LoginForm({
               href="/"
               className="flex flex-col items-center gap-2 font-medium"
             >
-              <div className="flex size-8 items-center justify-center rounded-md">
-                <PoetriaLogo />
+              <div className="flex items-center justify-center rounded-md">
+                <PoetriaLogo className="size-8" />
               </div>
               <span className="sr-only">Poetria.</span>
             </Link>

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useSidebar } from "./ui/sidebar";
 import { UserAvatar } from "./user-avatar";
 import { PoetriaLogo } from "./poetria-logo";
-import { User } from "@/lib/utils";
+import { User } from "@/lib/db";
 
 export function AppHeader({ user }: { user: User }) {
   const { toggleSidebar } = useSidebar();
@@ -19,8 +19,8 @@ export function AppHeader({ user }: { user: User }) {
           href="/"
           className="flex items-center space-x-2 absolute left-1/2 top-1/2 -translate-1/2"
         >
-          <div className="size-4 m-0">
-            <PoetriaLogo />
+          <div className="m-0">
+            <PoetriaLogo className="size-5" />
           </div>
           <span className="sr-only">Poetria.</span>
         </Link>

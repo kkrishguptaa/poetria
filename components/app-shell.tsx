@@ -19,10 +19,10 @@ import React, {
   cloneElement,
   ReactNode,
 } from "react";
-import { User } from "@/lib/utils";
 import { UserAvatar } from "./user-avatar";
 import { AppHeader } from "./app-header";
 import { AppNavigation } from "./app-navigation";
+import { User } from "@/lib/db";
 
 export interface AppPageProps {
   session: {

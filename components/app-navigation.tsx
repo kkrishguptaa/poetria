@@ -1,7 +1,8 @@
-import { cn, User } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { type NavigationItem } from "./app-shell";
 import { UserAvatar } from "./user-avatar";
 import Link from "next/link";
+import { User } from "@/lib/db";
 
 export function AppNavigation({
   user,

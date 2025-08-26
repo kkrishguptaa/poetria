@@ -1,5 +1,6 @@
-import { cn, User } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { User } from "@/lib/db";
 
 export function UserAvatar({
   user,
