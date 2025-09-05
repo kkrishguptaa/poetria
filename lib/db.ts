@@ -5,6 +5,7 @@ import * as schema from "@/schema";
 export const db = drizzle({
   schema,
   connection: env.DATABASE_URL,
+  logger: env.DEVELOPMENT,
 });
 
 export type User = NonNullable<

@@ -4,6 +4,8 @@ import { z } from "zod";
 
 export const env = createEnv({
   server: {
+    DEVELOPMENT: z.coerce.boolean().default(false),
+
     DATABASE_URL: z.url(),
 
     AUTH_SECRET: z.string().min(32),
@@ -18,6 +20,11 @@ export const env = createEnv({
     AUTH_DISCORD_SECRET: z.string(),
   },
   client: {},
-  experimental__runtimeEnv: process.env,
+  experimental__runtimeEnv: {
+    DEVELOPMENT:
+      process.env.NODE_ENV !== "production" &&
+      process.env.VERCEL_ENV !== "production",
+    ...process.env,
+  },
   extends: [vercel()],
 });
