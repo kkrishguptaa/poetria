@@ -45,7 +45,7 @@
     "@tailwindcss/postcss": "4.1.18",
     "@types/node": "20.19.17",
     "@types/pg": "8.16.0",
-    "@types/react": "19.2.8",
+    "@types/react": "19.2.9",
     "@types/react-dom": "19.2.3",
     "@typescript-eslint/eslint-plugin": "8.53.1",
     "@typescript-eslint/parser": "8.53.1",
